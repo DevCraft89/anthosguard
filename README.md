@@ -81,18 +81,18 @@ curl -X POST http://$INGRESS_IP/accounts \
   -H "Content-Type: application/json" \
   -d '{"user_id":"u123","email":"test@mailinator.com","country":"ZZ"}'
 
-#Accomplishments
+##Accomplishments
 	•	Fully event-driven, cloud-native stack in Kubernetes
 	•	Pub/Sub integration across services
 	•	Working fraud scoring with live dashboard
 	•	Automated testing flow with Postman
 
-What’s next
+##What’s next
 	•	Replace toy scoring with ML model
 	•	Add CI/CD pipeline
 	•	Multi-region HA deployment
 
-#Acknowledgements
+##Acknowledgements
 Built as part of the GKE Turns 10 Hackathon using Bank of Anthos + GKE + Google Cloud AI.
 
 
