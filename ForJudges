@@ -1,0 +1,23 @@
+🛡️ AnthosGuard – AI-Powered Fraud Detection on GKE
+
+AnthosGuard is a cloud-native demo system that simulates account creation events and runs them through an AI-powered fraud detector.
+It is fully containerized, deployed on Google Kubernetes Engine (GKE Autopilot), and exposes endpoints for both publishing events and viewing fraud scores.
+
+⸻
+
+🚀 Architecture
+	•	account-created → Publishes account_created events (via FastAPI).
+	•	fraud-detector → Subscribes, scores events (LOW / MED / HIGH risk).
+	•	NATS / PubSub → Event pipeline between services.
+	•	Ingress + LoadBalancer → Public endpoints for demo and testing.
+
+Endpoints
+
+Account Service : /accounts (POST), to publish new account events
+Fraud Detector: /healthz, Liveness probe
+Fraud Detector: /status, JSON fraud stats (counters + history)
+Fraud Detector: /dashboard, Web dashboard of recent scored events
+
+Demo with Postman
+ . Import Collection : AnthosGuard_Demo_with_Tests.postman_collection.json
+ . Run the Collection : Open the Postman Runner, select AnthosGuard Demo, and click Run.

@@ -1,0 +1,25 @@
+# macOS & editor
+.DS_Store
+.vscode/
+.idea/
+*.code-workspace
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+
+# Docker / build
+dist/
+build/
+*.egg-info/
+
+# Cloud Shell / logs
+*.log
+
+# Postman artifacts
+newman/

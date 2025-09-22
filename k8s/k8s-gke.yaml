@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-created
+  namespace: anthosguard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: account-created
+  template:
+    metadata:
+      labels:
+        app: account-created
+    spec:
+      serviceAccountName: account-svc
+      containers:
+      - name: api
+        image: us-central1-docker.pkg.dev/__PROJECT_ID__/containers/account-created:prod
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PROJECT_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: TOPIC_ID
+          value: account-created
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-created
+  namespace: anthosguard
+  annotations:
+    cloud.google.com/backend-config: '{"default":"hc-healthz"}'
+    cloud.google.com/neg: '{"ingress":true}'
+spec:
+  selector:
+    app: account-created
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-detector
+  namespace: anthosguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fraud-detector
+  template:
+    metadata:
+      labels:
+        app: fraud-detector
+    spec:
+      serviceAccountName: fraud-svc
+      containers:
+      - name: worker
+        image: us-central1-docker.pkg.dev/__PROJECT_ID__/containers/fraud-detector:prod
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PROJECT_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SUBSCRIPTION_ID
+          value: fraud-detector
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fraud-detector
+  namespace: anthosguard
+  annotations:
+    cloud.google.com/backend-config: '{"default":"hc-healthz"}'
+    cloud.google.com/neg: '{"ingress":true}'
+spec:
+  selector:
+    app: fraud-detector
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: anthosguard
+  namespace: anthosguard
+spec:
+  defaultBackend:
+    service:
+      name: account-created
+      port:
+        number: 80
+  rules:
+  - http:
+      paths:
+      - path: /accounts
+        pathType: Prefix
+        backend:
+          service:
+            name: account-created
+            port:
+              number: 80
+      - path: /healthz
+        pathType: Prefix
+        backend:
+          service:
+            name: account-created
+            port:
+              number: 80
+      - path: /fraud
+        pathType: Prefix
+        backend:
+          service:
+            name: fraud-detector
+            port:
+              number: 80
