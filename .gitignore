@@ -24,4 +24,6 @@ build/
 # Postman artifacts
 newman/
 
+# Private / local-only files
 ForJudges
+postman/AnthosGuard_Env.postman_environment.json
