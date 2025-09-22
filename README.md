@@ -33,25 +33,26 @@ We wanted to explore **event-driven architectures** with Anthos/GKE + Pub/Sub, s
 ---
 
 ## 🧩 Repo Structure
-anthosguard/
-├── services/
-│   ├── account-created/
-│   │   ├── app/main.py
-│   │   ├── requirements.txt
-│   │   └── Dockerfile
-│   └── fraud-detector/
-│       ├── app/main.py
-│       ├── requirements.txt
-│       └── Dockerfile
-├── k8s/
-│   ├── k8s-gke.yaml         # Deployments, Services, Ingress
-│   ├── account-created-lb.yaml
-│   └── fraud-detector-lb.yaml
-├── postman/
-│   ├── AnthosGuard_Demo_with_Tests.postman_collection.json
-│   └── AnthosGuard_Env.postman_environment.json
-├── recreate_anthosguard.sh  # script to recreate cluster + deploy
-└── README.md
+
+	anthosguard/
+	├── services/
+	│   ├── account-created/
+	│   │   ├── app/main.py
+	│   │   ├── requirements.txt
+	│   │   └── Dockerfile
+	│   └── fraud-detector/
+	│       ├── app/main.py
+	│       ├── requirements.txt
+	│       └── Dockerfile
+	├── k8s/
+	│   ├── k8s-gke.yaml         # Deployments, Services, Ingress
+	│   ├── account-created-lb.yaml
+	│   └── fraud-detector-lb.yaml
+	├── postman/
+	│   ├── AnthosGuard_Demo_with_Tests.postman_collection.json
+	│   └── AnthosGuard_Env.postman_environment.json
+	├── recreate_anthosguard.sh  # script to recreate cluster + deploy
+	└── README.md
 ---
 
 ## ⚙️ Tech Stack
